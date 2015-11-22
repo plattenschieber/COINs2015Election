@@ -7,12 +7,6 @@ r = praw.Reddit(user_agent='mac:COINs2015Election:v1.0.1 (by /u/plattenschieber)
 # TODO should be a dynamical list based on buzzwords and some manual ones where we know they are relevant for us 
 subreddit = r.get_subreddit('SandersForPresident')
 
-# get the hottest submissions in this reddit 
-# TODO should be a lot more to generate some base data
-for submission in subreddit.get_hot(limit=5):
-    # we get a lot of more_comments structures which need to be resolved
-    # the maximum of one time resolvement is at 200 comments hence the replace_more_comments call
-    submission.replace_more_comments(limit=None, threshold=0)
     # flattening the tree since we don't care about the answering order
     flat_comments = praw.helpers.flatten_tree(submission.comments)
     for comment in flat_comments:
@@ -22,3 +16,5 @@ for submission in subreddit.get_hot(limit=5):
             print(comment.body)
     # indicate finish of a submission
     print("\n ENDE")
+# get last 1000 comments in subreddit 'SandersForPresident'
+subreddit_comments = subreddit.get_comments(limit=1000)
