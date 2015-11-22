@@ -2,7 +2,7 @@ import praw
 from pprint import pprint
 
 # setup a unique user agent to not get banned
-r = praw.Reddit(user_agent='mac:COINs2015Election:v1.0.1 (by /u/plattenschieber)')
+r = praw.Reddit(user_agent='mac:COINs2015Election:v1.0.2 (by /u/plattenschieber)')
 # this is the subreddit we are interested in
 # TODO should be a dynamical list based on buzzwords and some manual ones where we know they are relevant for us 
 subreddit = r.get_subreddit('SandersForPresident')
