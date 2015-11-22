@@ -1,10 +1,15 @@
 import praw
 from pprint import pprint
 
+# setup a unique user agent to not get banned
 r = praw.Reddit(user_agent='mac:COINs2015Election:v1.0.1 (by /u/plattenschieber)')
+# this is the subreddit we are interested in
+# TODO should be a dynamical list based on buzzwords and some manual ones where we know they are relevant for us 
 subreddit = r.get_subreddit('SandersForPresident')
+
+# get the hottest submissions in this reddit 
+# TODO should be a lot more to generate some base data
 for submission in subreddit.get_hot(limit=5):
-    pprint(help(submissions))
     # we get a lot of more_comments structures which need to be resolved
     # the maximum of one time resolvement is at 200 comments hence the replace_more_comments call
     submission.replace_more_comments(limit=None, threshold=0)
