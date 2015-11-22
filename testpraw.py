@@ -18,7 +18,8 @@ for submission in subreddit.get_hot(limit=5):
     for comment in flat_comments:
         # test if it contains relevant information about a candidate
         # TODO should be a list of buzzwords in the future
-        if "sander" in comment.body:
+        buzzwords = ["sander", "bernie", "sanders"]
+        if any(buzz in comment.body.lower() for buzz in buzzwords):
             print(comment.body)
     # indicate finish of a submission
     print("\n ENDE")
