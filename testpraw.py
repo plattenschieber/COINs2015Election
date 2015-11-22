@@ -19,5 +19,5 @@ for comment in flat_comments:
     if any(buzz in comment.body.lower() for buzz in buzzwords):
         count = count + 1
         # print only first 100 character (for more look at comment.body)
-        print(comment)
-    print("Number of comments including buzzwords: ", i)
+        print(str(count) + ": " + str(comment))
+print('Number of comments including buzzwords: ', count)
