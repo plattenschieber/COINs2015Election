@@ -17,7 +17,10 @@ for submission in subreddit.get_hot(limit=5):
     flat_comments = praw.helpers.flatten_tree(submission.comments)
     for comment in flat_comments:
         # test if it contains relevant information about a candidate
+        print("This is why I'm hot: ")
+        pprint( vars(comment))
         buzzwords = ["sander", "bernie", "sanders"]
+        exit()
         if any(buzz in comment.body.lower() for buzz in buzzwords):
             print(comment.body)
     # indicate finish of a submission
