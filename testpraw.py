@@ -10,3 +10,10 @@ for submission in subreddit.get_hot(limit=5):
     submission.replace_more_comments(limit=None, threshold=0)
     # flattening the tree since we don't care about the answering order
     flat_comments = praw.helpers.flatten_tree(submission.comments)
+    for comment in flat_comments:
+        # test if it contains relevant information about a candidate
+        # TODO should be a list of buzzwords in the future
+        if "sander" in comment.body:
+            print(comment.body)
+    # indicate finish of a submission
+    print("\n ENDE")
