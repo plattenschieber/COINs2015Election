@@ -24,9 +24,11 @@ for comment in flat_comments:
 print('Number of comments including buzzwords: ', count)
 
 with open('comments.csv', 'w') as csvfile:
+    # define dictionary for csv header and write it
     fieldnames = ['author', 'created_utc', 'subreddit', 'subreddit_id', 'ups', 'downs', 'body']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
     writer.writeheader()
+    # get out all comments into the csv file
     for comment in flat_comments:
         writer.writerow({'author':comment.author, 'created_utc':comment.created_utc, 'subreddit':comment.subreddit, 'subreddit_id':comment.subreddit_id, 'ups':comment.ups, 'downs':comment.downs, 'body':comment.body.encode('utf-8')})
