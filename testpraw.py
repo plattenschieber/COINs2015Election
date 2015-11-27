@@ -14,6 +14,12 @@ subreddit_comments = subreddit.get_comments(limit=1000)
 with open('comments.csv', 'w') as csvfile:
     # count total relevant answers
     count=0
+
+    # define dictionary for csv header and write it
+    fieldnames = ['author', 'created_utc', 'subreddit', 'subreddit_id', 'ups', 'downs', 'body']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+
     # flattening the comment tree since we don't care about the answering order
     flat_comments = praw.helpers.flatten_tree(subreddit_comments)
 
@@ -25,11 +31,6 @@ with open('comments.csv', 'w') as csvfile:
             count = count + 1
             # print only first 100 character (for more look at comment.body)
             print(str(count) + ": " + str(comment))
-
-    # define dictionary for csv header and write it
-    fieldnames = ['author', 'created_utc', 'subreddit', 'subreddit_id', 'ups', 'downs', 'body']
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-    writer.writeheader()
 
     # get out all comments into the csv file
     for comment in flat_comments:
