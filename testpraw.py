@@ -14,7 +14,7 @@ subreddit_comments = subreddit.get_comments(limit=1000)
 with open('comments.csv', 'w') as csvfile:
     # count total relevant answers
     count=0
-    # flattening the tree since we don't care about the answering order
+    # flattening the comment tree since we don't care about the answering order
     flat_comments = praw.helpers.flatten_tree(subreddit_comments)
 
     # print only some specific comments
