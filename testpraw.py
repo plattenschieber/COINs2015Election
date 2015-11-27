@@ -1,4 +1,5 @@
 import praw
+import csv
 from pprint import pprint
 
 # setup a unique user agent to not get banned
@@ -21,3 +22,11 @@ for comment in flat_comments:
         # print only first 100 character (for more look at comment.body)
         print(str(count) + ": " + str(comment))
 print('Number of comments including buzzwords: ', count)
+
+with open('comments.csv', 'w') as csvfile:
+    fieldnames = ['author', 'created_utc', 'subreddit', 'subreddit_id', 'ups', 'downs', 'body']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+    writer.writeheader()
+    for comment in flat_comments:
+        writer.writerow({'author':comment.author, 'created_utc':comment.created_utc, 'subreddit':comment.subreddit, 'subreddit_id':comment.subreddit_id, 'ups':comment.ups, 'downs':comment.downs, 'body':comment.body.encode('utf-8')})
