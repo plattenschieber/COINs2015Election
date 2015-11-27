@@ -31,9 +31,7 @@ with open('comments.csv', 'w') as csvfile:
             count = count + 1
             # print only first 100 character (for more look at comment.body)
             print(str(count) + ": " + str(comment))
-
-    # get out all comments into the csv file
-    for comment in flat_comments:
-        writer.writerow({'author':comment.author, 'created_utc':comment.created_utc, 'subreddit':comment.subreddit, 'subreddit_id':comment.subreddit_id, 'ups':comment.ups, 'downs':comment.downs, 'body':comment.body.encode('utf-8')})
+            # and write relevant comment into csv 
+            writer.writerow({'author':comment.author, 'created_utc':comment.created_utc, 'subreddit':comment.subreddit, 'subreddit_id':comment.subreddit_id, 'ups':comment.ups, 'downs':comment.downs, 'body':comment.body.encode('utf-8')})
 
 print('Number of comments including buzzwords: ', count)
