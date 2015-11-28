@@ -4,9 +4,11 @@ from pprint import pprint
 
 # setup a unique user agent to not get banned
 r = praw.Reddit(user_agent='mac:COINs2015Election:v1.0.2 (by /u/plattenschieber)')
-# this is the subreddit we are interested in
-# TODO should be a dynamical list based on buzzwords and some manual ones where we know they are relevant for us 
-subreddit = r.get_subreddit('SandersForPresident')
+
+# a list of subreddits based on buzzwords and some manual ones where we know they are relevant for us 
+subredditlist = ['SandersForPresident', 'Clinton', 'hillaryclinton', 'democrats', 'Libertarian', 'PoliticalDiscussion', 'worldpolitics', 'POLITIC', 'politics', 'SandersAlerts', 'uspolitics', 'Liberal', 'The_Donald', 'Conservative', 'Conservatives', 'Marco_Rubio', 'republicans', 'Republican', 'ElectionPolls', 'Forecast2016', 'BenCarson']
+# a '+' between all subreddits lets us get all named subreddits at once
+subreddit = r.get_subreddit('+'.join(subredditlist))
 
 # get last 1000 comments in subreddit 'SandersForPresident'
 subreddit_comments = subreddit.get_comments(limit=1000)
