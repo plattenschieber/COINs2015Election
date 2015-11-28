@@ -11,7 +11,7 @@ subredditlist = ['SandersForPresident', 'Clinton', 'hillaryclinton', 'democrats'
 subreddit = r.get_subreddit('+'.join(subredditlist))
 
 # get last 1000 comments in subreddit 'SandersForPresident'
-subreddit_comments = subreddit.get_comments(limit=1000)
+subreddit_comments = subreddit.get_comments(limit=10000)
 
 with open('comments.csv', 'w') as csvfile:
     # count total relevant answers
@@ -28,7 +28,7 @@ with open('comments.csv', 'w') as csvfile:
     # print only some specific comments
     for comment in flat_comments:
         # test if it contains relevant information about a candidate
-        buzzwords = ["sander", "bernie", "sanders"]
+        buzzwords = ['vote', 'voting', 'sander', 'sanders', 'bernie', 'hillary', 'clinton', 'donald', 'trump', 'marco', 'rubio', 'ben', 'carson', 'republican', 'republicans', 'conservative', 'libertarian', 'democrats']
         if any(buzz in comment.body.lower() for buzz in buzzwords):
             count = count + 1
             # print only first 100 character (for more look at comment.body)
