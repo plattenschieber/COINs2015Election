@@ -2,6 +2,7 @@ package org.coins.classifier.lang.counting;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Sets;
 import org.coins.classifier.lang.words.WordGroup;
 import org.coins.classifier.lang.words.WordType;
 
@@ -15,10 +16,15 @@ import java.util.stream.Stream;
 public class OccurrenceCounter {
     private final CountingContext localCountingContext = new CountingContext();
     private final SetMultimap<String, WordGroup> wordToGroupMap = HashMultimap.create();
+    private final Set<Countable> countables = Sets.newHashSet();
 
     public OccurrenceCounter(WordType... wordTypes) {
         for (WordType wordType : wordTypes) {
+            countables.add(wordType);
             for (WordGroup wordGroup : wordType.getGroupSet()) {
+                if (wordGroup instanceof Countable) {
+                    countables.add((Countable) wordGroup);
+                }
                 for (String word : wordGroup.getWordSet()) {
                     wordToGroupMap.put(word, wordGroup);
                 }
@@ -56,5 +62,9 @@ public class OccurrenceCounter {
 
     public CountingContext getLocalCountingContext() {
         return localCountingContext;
+    }
+
+    public Set<Countable> getCountables() {
+        return countables;
     }
 }

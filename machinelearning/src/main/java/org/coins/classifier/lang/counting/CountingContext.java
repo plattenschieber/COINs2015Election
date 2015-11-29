@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import org.coins.classifier.lang.words.WordGroup;
 import org.coins.classifier.lang.words.WordType;
 
+import java.io.PrintStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -80,17 +81,10 @@ public class CountingContext {
         return wordsCounted;
     }
 
-    public void printCounts() {
+    public void printFrequencies(PrintStream stream) {
         final List<CountWrapper> sortedCounts = getSortedCounts();
         for (CountWrapper count : sortedCounts) {
-            System.out.println(String.format("%s: %d", count.getName(), count.getCount()));
-        }
-    }
-
-    public void printFrequencies() {
-        final List<CountWrapper> sortedCounts = getSortedCounts();
-        for (CountWrapper count : sortedCounts) {
-            System.out.println(String.format("%s: %.2f%%", count.getName(), count.getCount() * 100/(double)getWordsCounted()));
+            stream.println(String.format("%s: %.2f%%", count.getName(), count.getCount() * 100/(double)getWordsCounted()));
         }
     }
 }
