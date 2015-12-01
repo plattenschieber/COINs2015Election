@@ -1,14 +1,15 @@
 package org.coins.classifier.lang.counting;
 
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
+import org.coins.classifier.lang.filters.Filter;
 import org.coins.classifier.lang.words.WordGroup;
 import org.coins.classifier.lang.words.WordType;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * Created by johannes on 11/28/15.
@@ -17,6 +18,8 @@ public class OccurrenceCounter {
     private final CountingContext localCountingContext = new CountingContext();
     private final SetMultimap<String, WordGroup> wordToGroupMap = HashMultimap.create();
     private final Set<Countable> countables = Sets.newHashSet();
+
+    private final List<Filter> filters = Lists.newArrayList();
 
     public OccurrenceCounter(WordType... wordTypes) {
         for (WordType wordType : wordTypes) {
@@ -32,12 +35,13 @@ public class OccurrenceCounter {
         }
     }
 
-    public Set<String> getWordsToCount() {
-        return wordToGroupMap.keySet();
+    public void addFilter(Filter filter) {
+        filters.add(filter);
+
     }
 
-    public void countOccurrences(Stream<String> stream, CountingContext countingContext) {
-        stream.forEach((line) -> countOccurrences(line, countingContext));
+    public Set<String> getWordsToCount() {
+        return wordToGroupMap.keySet();
     }
 
     public void countOccurrences(List<String> texts, CountingContext countingContext) {
@@ -48,7 +52,13 @@ public class OccurrenceCounter {
         if (countingContext == null) {
             countingContext = localCountingContext;
         }
-        final String[] words = text.split("[^a-zA-Z']");
+        for (Filter filter : filters) {
+            final CountWrapper countWrapper = countingContext.getCounter(filter);
+            filter.setListener(countWrapper::increment);
+            text = filter.apply(text);
+            filter.unsetListener();
+        }
+        final String[] words = tokenize(text);
         for (String word : words) {
             final String keyWord = word.toLowerCase();
             if (getWordsToCount().contains(keyWord)) {
@@ -58,6 +68,10 @@ public class OccurrenceCounter {
             }
         }
         countingContext.addWordsCounted(words.length);
+    }
+
+    public String[] tokenize(String text) {
+        return text.split("[^a-zA-Z']+");
     }
 
     public CountingContext getLocalCountingContext() {

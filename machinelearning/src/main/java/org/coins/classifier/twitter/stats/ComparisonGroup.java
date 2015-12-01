@@ -41,6 +41,14 @@ public abstract class ComparisonGroup {
         return StatUtils.percentile(getFrequencies(countable), 50);
     }
 
+    public double getMax(Countable countable) {
+        return StatUtils.max(getFrequencies(countable));
+    }
+
+    public double getMin(Countable countable) {
+        return StatUtils.min(getFrequencies(countable));
+    }
+
     public double[] getFrequencies(Countable countable) {
         final List<Double> frequencyList = Lists.transform(getMembers(), groupable -> groupable.getFrequency(countable, null));
         final double[] frequencyArray = new double[frequencyList.size()];
@@ -62,8 +70,8 @@ public abstract class ComparisonGroup {
         stream.println("\n=======================\n");
         stream.println("Word frequencies in " + groupType + ": " + getName());
         for (Countable countable : countables) {
-            stream.println(String.format("%s: mean %.2f%%, median: %.2f%%, variance %.2f", countable.getName(),
-                    getMean(countable) * 100, getMedian(countable) * 100, getVariance(countable)));
+            stream.println(String.format("%s: \tmean %.2f%%,\tmedian: %.2f%%,\tstandard deviation %.3f%%,\tmax: %.2f%%,\tmin: %.2f%%", countable.getName(),
+                    getMean(countable) * 100, getMedian(countable) * 100, Math.sqrt(getVariance(countable))*100, getMax(countable)*100, getMin(countable)*100));
         }
     }
 }

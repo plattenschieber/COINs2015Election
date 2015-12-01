@@ -2,6 +2,7 @@ package org.coins.classifier.lang.counting;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import org.coins.classifier.lang.filters.Filter;
 import org.coins.classifier.lang.words.WordGroup;
 import org.coins.classifier.lang.words.WordType;
 
@@ -22,11 +23,13 @@ public class CountingContext {
 
     private final Map<WordType,CountWrapper> typeCounts = new HashMap<>();
     private final Map<WordGroup, CountWrapper> groupCounts = new HashMap<>();
+    private final Map<Filter, CountWrapper> filterCounts = new HashMap<>();
     private int wordsCounted = 0;
 
     public Set<CountWrapper> getCounts() {
         Set<CountWrapper> counts = Sets.newHashSet(typeCounts.values());
         counts.addAll(groupCounts.values());
+        counts.addAll(filterCounts.values());
         return counts;
     }
 
@@ -63,6 +66,16 @@ public class CountingContext {
             }
         } else {
             countWrapper = getCounter(wordGroup.getParentType());
+        }
+        return countWrapper;
+    }
+
+    public CountWrapper getCounter(Filter filter) {
+        CountWrapper countWrapper = filterCounts.get(filter);
+        if (countWrapper == null) {
+            //TODO: child counts
+            countWrapper = new CountWrapper(filter);
+            filterCounts.put(filter, countWrapper);
         }
         return countWrapper;
     }
