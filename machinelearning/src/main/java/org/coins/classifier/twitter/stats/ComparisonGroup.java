@@ -74,4 +74,11 @@ public abstract class ComparisonGroup {
                     getMean(countable) * 100, getMedian(countable) * 100, Math.sqrt(getVariance(countable))*100, getMax(countable)*100, getMin(countable)*100));
         }
     }
+    public void printToFile(PrintStream stream) {
+        stream.println("TYPE,MEAN,MEDIAN,STANDARD DEVIATION,MAX,MIN\n");
+        for (Countable countable : countables) {
+            stream.println(String.format("%s,%.2f%%,%.2f%%,%.3f%%,%.2f%%,%.2f%%", countable.getName(),
+                    getMean(countable) * 100, getMedian(countable) * 100, Math.sqrt(getVariance(countable))*100, getMax(countable)*100, getMin(countable)*100));
+        }
+    }
 }

@@ -7,6 +7,10 @@ import org.coins.classifier.twitter.TwitterUser;
 import org.coins.classifier.twitter.stats.UserGroup;
 import twitter4j.TwitterException;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+
 /**
  * Created by johannes on 11/28/15.
  */
@@ -24,5 +28,14 @@ public class Main {
                 new TwitterUser("JebBush")));
         userGroup.analyzeTweets(occurrenceCounter, null);
         userGroup.printToStream(System.out);
+        userGroup.getUsers().get(0).printToStream(System.out);
+        try {
+            String fileName = System.getProperty("user.home")+"/candidates.csv";
+            userGroup.printToFile(new PrintStream(new File(fileName)));
+            System.out.println("Successfully created "+fileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 }
