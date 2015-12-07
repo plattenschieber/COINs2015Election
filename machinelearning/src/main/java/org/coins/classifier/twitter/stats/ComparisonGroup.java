@@ -38,7 +38,11 @@ public abstract class ComparisonGroup {
     }
 
     public double getMedian(Countable countable) {
-        return StatUtils.percentile(getFrequencies(countable), 50);
+        return getPercentile(countable, 50);
+    }
+
+    public double getPercentile(Countable countable, double percentile) {
+        return StatUtils.percentile(getFrequencies(countable), percentile);
     }
 
     public double getMax(Countable countable) {
@@ -75,10 +79,10 @@ public abstract class ComparisonGroup {
         }
     }
     public void printToFile(PrintStream stream) {
-        stream.println("TYPE,MEAN,MEDIAN,STANDARD DEVIATION,MAX,MIN\n");
+        stream.println("TYPE,MEAN,FIRST_QUARTILE,MEDIAN,THIRD_QUARTILE,STANDARD DEVIATION,MAX,MIN\n");
         for (Countable countable : countables) {
-            stream.println(String.format("%s,%.2f%%,%.2f%%,%.3f%%,%.2f%%,%.2f%%", countable.getName(),
-                    getMean(countable) * 100, getMedian(countable) * 100, Math.sqrt(getVariance(countable))*100, getMax(countable)*100, getMin(countable)*100));
+            stream.println(String.format("%s,%.2f%%,%.2f%%,%.2f%%,%.2f%%,%.3f%%,%.2f%%,%.2f%%", countable.getName(),
+                    getMean(countable) * 100, getPercentile(countable, 25) * 100, getMedian(countable) * 100, getPercentile(countable, 75) * 100, Math.sqrt(getVariance(countable))*100, getMax(countable)*100, getMin(countable)*100));
         }
     }
 }
