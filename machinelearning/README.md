@@ -12,6 +12,15 @@ In order to run the twitter fetcher, you need to enter your twitter API keys int
 
 Currently, the main ways to run the analysis are a) through the unit tests and b) using the main class. The main class currently only contains test code, but should be extended to perform different actions on input files.
 
+### Running from the commandline
+
+You can create a jar with all dependencies included using the following command:
+```mvn compile assembly:single```
+
+Then you can simply run the jar (in the target folder):
+
+```java -jar twitter-classifier-1.0-SNAPSHOT-jar-with-dependencies.jar```
+
 ## Tests
 
 The project comes with unit tests for the critical classes. These can be executed by running `mvn test` or by running them in the IDE. The tests run on the sentences in `src/main/resources/TestData.txt`, feel free to add more test cases just make sure you adjust the expected counts accordingly.
