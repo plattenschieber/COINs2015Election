@@ -45,6 +45,6 @@ public class UserGroup extends ComparisonGroup implements Groupable {
 
     @Override
     public double getFrequency(Countable countable, CountingContext context) {
-        return getMean(countable);
+        return getMean(countable, context);
     }
 }

@@ -25,36 +25,36 @@ public abstract class ComparisonGroup {
     public abstract List<? extends Groupable> getMembers();
     public abstract String getName();
 
-    public double getVariance(Countable countable) {
-        return StatUtils.variance(getFrequencies(countable));
+    public double getVariance(Countable countable, CountingContext context) {
+        return StatUtils.variance(getFrequencies(countable, context));
     }
 
-    public double getMean(Countable countable) {
-        return StatUtils.mean(getFrequencies(countable));
+    public double getMean(Countable countable, CountingContext context) {
+        return StatUtils.mean(getFrequencies(countable, context));
     }
 
-    public double getGeometricMean(Countable countable) {
-        return StatUtils.geometricMean(getFrequencies(countable));
+    public double getGeometricMean(Countable countable, CountingContext context) {
+        return StatUtils.geometricMean(getFrequencies(countable, context));
     }
 
-    public double getMedian(Countable countable) {
-        return getPercentile(countable, 50);
+    public double getMedian(Countable countable, CountingContext context) {
+        return getPercentile(countable, context, 50);
     }
 
-    public double getPercentile(Countable countable, double percentile) {
-        return StatUtils.percentile(getFrequencies(countable), percentile);
+    public double getPercentile(Countable countable, CountingContext context, double percentile) {
+        return StatUtils.percentile(getFrequencies(countable, context), percentile);
     }
 
-    public double getMax(Countable countable) {
-        return StatUtils.max(getFrequencies(countable));
+    public double getMax(Countable countable, CountingContext context) {
+        return StatUtils.max(getFrequencies(countable, context));
     }
 
-    public double getMin(Countable countable) {
-        return StatUtils.min(getFrequencies(countable));
+    public double getMin(Countable countable, CountingContext context) {
+        return StatUtils.min(getFrequencies(countable, context));
     }
 
-    public double[] getFrequencies(Countable countable) {
-        final List<Double> frequencyList = Lists.transform(getMembers(), groupable -> groupable.getFrequency(countable, null));
+    public double[] getFrequencies(Countable countable, CountingContext context) {
+        final List<Double> frequencyList = Lists.transform(getMembers(), groupable -> groupable.getFrequency(countable, context));
         final double[] frequencyArray = new double[frequencyList.size()];
         for (int i = 0; i < frequencyList.size(); i++) {
             double frequency = frequencyList.get(i);
@@ -70,19 +70,19 @@ public abstract class ComparisonGroup {
         }
     }
 
-    public void printToStream(PrintStream stream) {
+    public void printToStream(PrintStream stream, CountingContext context) {
         stream.println("\n=======================\n");
         stream.println("Word frequencies in " + groupType + ": " + getName());
         for (Countable countable : countables) {
             stream.println(String.format("%s: \tmean %.2f%%,\tmedian: %.2f%%,\tstandard deviation %.3f%%,\tmax: %.2f%%,\tmin: %.2f%%", countable.getName(),
-                    getMean(countable) * 100, getMedian(countable) * 100, Math.sqrt(getVariance(countable))*100, getMax(countable)*100, getMin(countable)*100));
+                    getMean(countable, context) * 100, getMedian(countable, context) * 100, Math.sqrt(getVariance(countable, context))*100, getMax(countable, context)*100, getMin(countable, context)*100));
         }
     }
-    public void printToFile(PrintStream stream) {
+    public void printToFile(PrintStream stream, CountingContext context) {
         stream.println("TYPE,MEAN,FIRST_QUARTILE,MEDIAN,THIRD_QUARTILE,STANDARD DEVIATION,MAX,MIN\n");
         for (Countable countable : countables) {
             stream.println(String.format("%s,%.2f%%,%.2f%%,%.2f%%,%.2f%%,%.3f%%,%.2f%%,%.2f%%", countable.getName(),
-                    getMean(countable) * 100, getPercentile(countable, 25) * 100, getMedian(countable) * 100, getPercentile(countable, 75) * 100, Math.sqrt(getVariance(countable))*100, getMax(countable)*100, getMin(countable)*100));
+                    getMean(countable, context) * 100, getPercentile(countable, context, 25) * 100, getMedian(countable, context) * 100, getPercentile(countable, context, 75) * 100, Math.sqrt(getVariance(countable, context))*100, getMax(countable, context)*100, getMin(countable, context)*100));
         }
     }
 }
