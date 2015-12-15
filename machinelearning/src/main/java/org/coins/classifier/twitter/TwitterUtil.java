@@ -6,6 +6,7 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -20,7 +21,8 @@ public class TwitterUtil {
         try {
             return twitter.getUserTimeline(userHandle, paging);
         } catch (TwitterException e) {
-            throw new RuntimeException(e);
+            System.out.println("ERROR: Timeline not available for user " + userHandle);
+            return Collections.emptyList();
         }
     }
 
