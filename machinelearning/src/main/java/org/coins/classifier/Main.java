@@ -44,14 +44,13 @@ public class Main {
         } else {
             for (String path : args) {
                 try (Stream<String> lines = Files.lines(new File(path).toPath())) {
-                    CountingContext context = new CountingContext();
                     UserGroup userGroup = new UserGroup(path);
                     lines.forEach((text) -> userGroup.addUser(new TwitterUser(text)));
-                    userGroup.analyzeTweets(occurrenceCounter, context);
-                    userGroup.printToStream(System.out, context);
+                    userGroup.analyzeTweets(occurrenceCounter, null);
+                    userGroup.printToStream(System.out, null);
                     try {
                         String fileName = path + "-results.csv";
-                        userGroup.printToFile(new PrintStream(new File(fileName)), context);
+                        userGroup.printToFile(new PrintStream(new File(fileName)), null);
                         System.out.println("Successfully created "+fileName);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
