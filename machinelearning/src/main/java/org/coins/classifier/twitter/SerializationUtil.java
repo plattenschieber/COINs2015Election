@@ -21,9 +21,9 @@ public class SerializationUtil {
 
     public static void serialize(TwitterUser twitterUser) throws IOException {
 
-        Properties properties = new Properties();
-        InputStream inputProperties = SerializationUtil.class.getClassLoader().getResourceAsStream("TwitterUser.properties");
-        properties.load(inputProperties);
+        //Properties properties = new Properties();
+        //InputStream inputProperties = SerializationUtil.class.getClassLoader().getResourceAsStream("TwitterUser.properties");
+        //properties.load(inputProperties);
 
         String dateForPath = Calendar.getInstance().get(Calendar.YEAR) + "_"
                           + (Calendar.getInstance().get(Calendar.MONTH) + 1) + "_"
@@ -31,9 +31,9 @@ public class SerializationUtil {
                           +  Calendar.getInstance().get(Calendar.HOUR) + "_"
                           +  Calendar.getInstance().get(Calendar.MINUTE);
 
-        String fileName = twitterUser.getHandle() + "_" + dateForPath + ".twitteruser";
-        String filePath = properties.getProperty("savePath") + "\\";
-
+        String fileName = "\\" + twitterUser.getHandle() + "_" + dateForPath + ".twitteruser";
+        //String filePath = properties.getProperty("savePath") + "\\";
+        String filePath = System.getProperty("user.home");
         Path path = Paths.get(filePath + fileName);
 
         try{
