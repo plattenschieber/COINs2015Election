@@ -5,21 +5,23 @@ import org.coins.classifier.lang.counting.Countable;
 import org.coins.classifier.lang.counting.CountingContext;
 import org.coins.classifier.lang.counting.OccurrenceCounter;
 import org.coins.classifier.twitter.stats.Groupable;
+
 import twitter4j.Status;
 
 import java.io.PrintStream;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Created by johannes on 11/29/15.
  */
-public class TwitterUser implements Groupable {
+public class TwitterUser implements Groupable, Serializable {
 
     private final String handle;
     private List<Status> statuses;
-    private CountingContext defaultContext;
-    private Map<Countable, CountWrapper> counts;
+    private transient CountingContext defaultContext; //CountingContext is not serializable
+    private transient Map<Countable, CountWrapper> counts; //we do not need to serialize this
 
     public TwitterUser(String handle) {
         this.handle = handle;
@@ -61,4 +63,5 @@ public class TwitterUser implements Groupable {
         stream.println("Word frequencies in tweets by @"+handle);
         defaultContext.printFrequencies(stream);
     }
+
 }
