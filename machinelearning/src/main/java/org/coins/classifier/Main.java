@@ -14,6 +14,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -37,8 +39,25 @@ public class Main {
             userGroup.printToStream(System.out, null);
             userGroup.getUsers().get(0).printToStream(System.out);
 
+            /*
+             * serialization of fetched twitter user
+             */
             Serializer serializer = new Serializer();
             serializer.serialize(userGroup);
+
+            /*
+             * deserialisation if twitter user
+             * do only enter the filename, like berniesanders_2016_01_06_12_15.twitteruser
+             */
+//            List<String> fileNames = Lists.newArrayList(
+//                    "filename",
+//                    "filename",
+//                    "filename",
+//                    "filename",
+//                    "filename",
+//                    "filename");
+//
+//            List<TwitterUser> deserializedTwitterUser = Serializer.deserialize(fileNames);
 
             try {
                 String fileName = System.getProperty("user.home")+"/candidates.csv";

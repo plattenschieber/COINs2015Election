@@ -13,13 +13,15 @@ import org.coins.classifier.twitter.stats.UserGroup;
  */
 public class Serializer {
 
-    public static Object deserialize(List<String> fileNameList) {
+    public static List<TwitterUser> deserialize(List<String> fileNameList) {
 
         /*
          *Properties properties = new Properties();
          *InputStream inputProperties = Serializer.class.getClassLoader().getResourceAsStream("TwitterUser.properties");
          *properties.load(inputProperties);
         */
+
+        List<TwitterUser> twitterUserList = new ArrayList<TwitterUser>();
 
         Iterator<String> fileNameListIterator = fileNameList.iterator();
 
@@ -28,16 +30,20 @@ public class Serializer {
             String fileName = fileNameListIterator.next();
 
             //String filePath = properties.getProperty("savePath") + "\\";
-            String filePath = System.getProperty("user.home");
+            String filePath = System.getProperty("user.home") + "\\";
             Path path = Paths.get(filePath + fileName);
 
             try {
 
                 if (Files.exists(path)) {
 
-                    /*
-                     * To be continued...
-                     */
+                    FileInputStream fileInput = new FileInputStream(filePath + fileName);
+                    ObjectInputStream objectInput = new ObjectInputStream(fileInput);
+                    TwitterUser twitterUser = (TwitterUser) objectInput.readObject();
+                    objectInput.close();
+                    fileInput.close();
+
+                    twitterUserList.add(twitterUser);
 
                 } else {
 
