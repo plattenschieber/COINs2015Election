@@ -49,7 +49,7 @@ public class Main {
              * deserialisation if twitter user
              * do only enter the filename, like berniesanders_2016_01_06_12_15.twitteruser
              */
-//            List<String> fileNames = Lists.newArrayList(
+//            List<String> fileNameList = Lists.newArrayList(
 //                    "filename",
 //                    "filename",
 //                    "filename",
@@ -57,7 +57,7 @@ public class Main {
 //                    "filename",
 //                    "filename");
 //
-//            List<TwitterUser> deserializedTwitterUser = Serializer.deserialize(fileNames);
+//            List<TwitterUser> deserializedTwitterUserList = Serializer.deserialize(fileNameList);
 
             try {
                 String fileName = System.getProperty("user.home")+"/candidates.csv";
