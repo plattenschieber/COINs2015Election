@@ -64,4 +64,10 @@ public class TwitterUser implements Groupable, Serializable {
         defaultContext.printFrequencies(stream);
     }
 
+    public void createDefaultContext() {
+        if (defaultContext == null) {
+            defaultContext = new CountingContext();
+        }
+    }
+
 }

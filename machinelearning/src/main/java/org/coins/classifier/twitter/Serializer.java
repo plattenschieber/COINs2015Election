@@ -13,7 +13,7 @@ import org.coins.classifier.twitter.stats.UserGroup;
  */
 public class Serializer {
 
-    public static List<TwitterUser> deserialize(List<String> fileNameList) {
+    public static UserGroup deserialize(List<String> fileNameList, String folderInUserDirectory, String userGroupHandle) {
 
         /*
          *Properties properties = new Properties();
@@ -30,7 +30,7 @@ public class Serializer {
             String fileName = fileNameListIterator.next();
 
             //String filePath = properties.getProperty("savePath") + "\\";
-            String filePath = System.getProperty("user.home") + "\\";
+            String filePath = System.getProperty("user.home") + folderInUserDirectory;
             Path path = Paths.get(filePath + fileName);
 
             try {
@@ -42,6 +42,8 @@ public class Serializer {
                     TwitterUser twitterUser = (TwitterUser) objectInput.readObject();
                     objectInput.close();
                     fileInput.close();
+
+                    twitterUser.createDefaultContext();
 
                     twitterUserList.add(twitterUser);
 
@@ -57,16 +59,22 @@ public class Serializer {
 
         }
 
-        return null;
+        UserGroup userGroup = new UserGroup(userGroupHandle);
+        userGroup.addUsers(twitterUserList);
+
+        return userGroup;
     }
 
-    public static void serialize(UserGroup userGroup) throws IOException {
+    /*
+     * @folderInUserDirectory like "\\\twitter user\\sanders supporters"
+     */
+    public static void serialize(UserGroup userGroup, String folderInUserDirectory) throws IOException {
 
         /*
-         *Properties properties = new Properties();
-         *InputStream inputProperties = Serializer.class.getClassLoader().getResourceAsStream("TwitterUser.properties");
-         *properties.load(inputProperties);
-        */
+         * Properties properties = new Properties();
+         * InputStream inputProperties = Serializer.class.getClassLoader().getResourceAsStream("TwitterUser.properties");
+         * properties.load(inputProperties);
+         */
 
         List<TwitterUser> twitterUserList = userGroup.getUsers();
         Iterator<TwitterUser> twitterUserListIterator = twitterUserList.iterator();
@@ -82,8 +90,8 @@ public class Serializer {
                     + Calendar.getInstance().get(Calendar.MINUTE);
 
             String fileName = "\\" + twitterUser.getHandle() + "_" + dateForPath + ".twitteruser";
-            //String filePath = properties.getProperty("savePath") + "\\";
-            String filePath = System.getProperty("user.home");
+            //String filePath = properties.getProperty("savePath") + "folderInUserDirectory";
+            String filePath = System.getProperty("user.home") + folderInUserDirectory;
             Path path = Paths.get(filePath + fileName);
 
             try {

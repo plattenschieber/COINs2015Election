@@ -34,16 +34,18 @@ public class Main {
                     new TwitterUser("realDonaldTrump"),
                     new TwitterUser("RealBenCarson"),
                     new TwitterUser("marcorubio"),
-                    new TwitterUser("JebBush")));
+                    new TwitterUser("JebBush")
+            ));
             userGroup.analyzeTweets(occurrenceCounter, null);
             userGroup.printToStream(System.out, null);
             userGroup.getUsers().get(0).printToStream(System.out);
 
             /*
              * serialization of fetched twitter user
+             * The folder where you want to save the twitter users must exist!
              */
             Serializer serializer = new Serializer();
-            serializer.serialize(userGroup);
+            serializer.serialize(userGroup,"\\twitter user\\republicans");
 
             /*
              * deserialisation if twitter user
@@ -57,10 +59,10 @@ public class Main {
 //                    "filename",
 //                    "filename");
 //
-//            List<TwitterUser> deserializedTwitterUserList = Serializer.deserialize(fileNameList);
+//            UserGroup deserializedTwitterUserGroup = Serializer.deserialize(fileNameList, "\\\twitter user\\sanders" , "UserGroupName");
 
             try {
-                String fileName = System.getProperty("user.home")+"/candidates.csv";
+                String fileName = System.getProperty("user.home")+"/Republicans.csv";
                 userGroup.printToFile(new PrintStream(new File(fileName)), null);
                 System.out.println("Successfully created "+fileName);
             } catch (FileNotFoundException e) {
