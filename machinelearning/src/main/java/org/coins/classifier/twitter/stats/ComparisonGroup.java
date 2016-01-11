@@ -65,6 +65,7 @@ public abstract class ComparisonGroup {
 
     public void analyzeTweets(OccurrenceCounter counter, CountingContext context) {
         countables = counter.getCountables();
+        countables.addAll(Lists.newArrayList(TwitterStats.values()));
         for (Groupable groupable : getMembers()) {
             groupable.analyzeTweets(counter, context);
         }
@@ -74,15 +75,15 @@ public abstract class ComparisonGroup {
         stream.println("\n=======================\n");
         stream.println("Word frequencies in " + groupType + ": " + getName());
         for (Countable countable : countables) {
-            stream.println(String.format("%s: \tmean %.2f%%,\tmedian: %.2f%%,\tstandard deviation %.3f%%,\tmax: %.2f%%,\tmin: %.2f%%", countable.getName(),
-                    getMean(countable) * 100, getMedian(countable) * 100, Math.sqrt(getVariance(countable))*100, getMax(countable)*100, getMin(countable)*100));
+            stream.println(String.format("%s: \tmean %.4f,\tmedian: %.4f,\tstandard deviation %.5f,\tmax: %.4f,\tmin: %.4f", countable.getName(),
+                    getMean(countable), getMedian(countable), Math.sqrt(getVariance(countable)), getMax(countable), getMin(countable)));
         }
     }
     public void printToFile(PrintStream stream, CountingContext context) {
         stream.println("TYPE,MEAN,FIRST_QUARTILE,MEDIAN,THIRD_QUARTILE,STANDARD DEVIATION,MAX,MIN\n");
         for (Countable countable : countables) {
-            stream.println(String.format("%s,%.2f%%,%.2f%%,%.2f%%,%.2f%%,%.3f%%,%.2f%%,%.2f%%", countable.getName(),
-                    getMean(countable) * 100, getPercentile(countable, 25) * 100, getMedian(countable) * 100, getPercentile(countable, 75) * 100, Math.sqrt(getVariance(countable))*100, getMax(countable)*100, getMin(countable)*100));
+            stream.println(String.format("%s,%.6f,%.6f,%.6f,%.6f,%.7f,%.6f,%.6f", countable.getName(),
+                    getMean(countable), getPercentile(countable, 25), getMedian(countable), getPercentile(countable, 75), Math.sqrt(getVariance(countable)), getMax(countable), getMin(countable)));
         }
     }
 }

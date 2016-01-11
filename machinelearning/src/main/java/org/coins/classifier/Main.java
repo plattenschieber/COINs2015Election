@@ -1,21 +1,18 @@
 package org.coins.classifier;
 
 import com.google.common.collect.Lists;
-
 import org.coins.classifier.lang.counting.OccurrenceCounter;
 import org.coins.classifier.lang.words.WordType;
+import org.coins.classifier.twitter.Serializer;
 import org.coins.classifier.twitter.TwitterUser;
 import org.coins.classifier.twitter.stats.UserGroup;
 import twitter4j.TwitterException;
-import org.coins.classifier.twitter.Serializer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -44,8 +41,7 @@ public class Main {
              * serialization of fetched twitter user
              * The folder where you want to save the twitter users must exist!
              */
-            Serializer serializer = new Serializer();
-            serializer.serialize(userGroup,"\\twitter user\\republicans");
+            Serializer.serialize(userGroup,"\\twitter user\\republicans");
 
             /*
              * deserialisation if twitter user
