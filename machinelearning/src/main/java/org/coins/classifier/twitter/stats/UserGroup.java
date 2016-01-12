@@ -5,6 +5,7 @@ import org.coins.classifier.lang.counting.Countable;
 import org.coins.classifier.lang.counting.CountingContext;
 import org.coins.classifier.twitter.TwitterUser;
 
+import java.io.PrintStream;
 import java.util.List;
 
 /**
@@ -46,5 +47,22 @@ public class UserGroup extends ComparisonGroup implements Groupable {
     @Override
     public double getFrequency(Countable countable, CountingContext context) {
         return getMean(countable);
+    }
+
+    public void printUsersToFile(PrintStream stream, String supports) {
+        stream.print("NAME,SUPPORTS");
+        for (Countable countable : countables) {
+            stream.print(","+countable.getName());
+        }
+        stream.println();
+
+        for (TwitterUser user : users) {
+            stream.print(user.getHandle());
+            stream.print(","+supports);
+            for (Countable countable : countables) {
+                stream.print(","+user.getFrequency(countable, null));
+            }
+            stream.println();
+        }
     }
 }

@@ -16,7 +16,7 @@ import java.util.Set;
 public abstract class ComparisonGroup {
 
     private final String groupType;
-    private Set<Countable> countables;
+    protected Set<Countable> countables;
 
     public ComparisonGroup(String groupType) {
         this.groupType = groupType;
@@ -79,6 +79,7 @@ public abstract class ComparisonGroup {
                     getMean(countable), getMedian(countable), Math.sqrt(getVariance(countable)), getMax(countable), getMin(countable)));
         }
     }
+
     public void printToFile(PrintStream stream, CountingContext context) {
         stream.println("TYPE,MEAN,FIRST_QUARTILE,MEDIAN,THIRD_QUARTILE,STANDARD DEVIATION,MAX,MIN\n");
         for (Countable countable : countables) {

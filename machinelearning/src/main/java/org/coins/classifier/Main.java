@@ -78,6 +78,15 @@ public class Main {
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
+
+                    //print individual user file
+                    try {
+                        String fileName = path + "-users.csv";
+                        userGroup.printUsersToFile(new PrintStream(new File(fileName)), path);
+                        System.out.println("Successfully created "+fileName);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 } catch (IOException e) {
                     System.out.println("ERROR: file " + path + " cannot be opened");
                 }
