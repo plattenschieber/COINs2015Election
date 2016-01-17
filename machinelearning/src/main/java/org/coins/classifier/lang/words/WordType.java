@@ -74,7 +74,7 @@ public enum WordType implements Countable {
             "thundercunt", "tit", "titfuck", "tits", "tittyfuck", "twat", "twatlips", "twats", "twatwaffle", "unclefucker",
             "va-j-j", "vag", "vagina", "vajayjay", "vjayjay", "wank", "wankjob", "wetback", "whore", "whorebag", "whoreface",
             "wop" )),
-    US_TERMS(new WordGroup("US", "United States", "America", "USA", "murica")),
+    US_TERMS(new WordGroup("US", "States", "America", "USA", "murica")),
     CLINTON_TERMS(new WordGroup("Hillary", "Clinton")),
     SANDERS_TERMS(new WordGroup("Bernie", "Sanders")),
     TRUMP_TERMS(new WordGroup("Donald", "Trump")),

@@ -75,7 +75,7 @@ public abstract class ComparisonGroup {
         stream.println("\n=======================\n");
         stream.println("Word frequencies in " + groupType + ": " + getName());
         for (Countable countable : countables) {
-            stream.println(String.format("%s: \tmean %.4f,\tmedian: %.4f,\tstandard deviation %.5f,\tmax: %.4f,\tmin: %.4f", countable.getName(),
+            stream.println(String.format("%s: \tmean %.8f,\tmedian: %.8f,\tstandard deviation %.8f,\tmax: %.8f,\tmin: %.8f", countable.getName(),
                     getMean(countable), getMedian(countable), Math.sqrt(getVariance(countable)), getMax(countable), getMin(countable)));
         }
     }

@@ -37,7 +37,7 @@ public class OccurrenceCounter {
 
     public void addFilter(Filter filter) {
         filters.add(filter);
-
+        countables.addAll(filter.getCountableChildren());
     }
 
     public Set<String> getWordsToCount() {

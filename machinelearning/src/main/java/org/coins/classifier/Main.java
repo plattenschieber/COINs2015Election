@@ -2,8 +2,9 @@ package org.coins.classifier;
 
 import com.google.common.collect.Lists;
 import org.coins.classifier.lang.counting.OccurrenceCounter;
+import org.coins.classifier.lang.filters.contraction.ContractionFilter;
+import org.coins.classifier.lang.filters.punctuation.PunctuationFilter;
 import org.coins.classifier.lang.words.WordType;
-import org.coins.classifier.twitter.Serializer;
 import org.coins.classifier.twitter.TwitterUser;
 import org.coins.classifier.twitter.stats.UserGroup;
 import twitter4j.TwitterException;
@@ -22,16 +23,18 @@ public class Main {
 
     public static void main(String[] args) throws TwitterException, IOException {
         final OccurrenceCounter occurrenceCounter = new OccurrenceCounter(WordType.values());
+        occurrenceCounter.addFilter(ContractionFilter.getInstance());
+        occurrenceCounter.addFilter(PunctuationFilter.getInstance());
 
         if (args.length == 0) {
             UserGroup userGroup = new UserGroup("Candidates");
             userGroup.addUsers(Lists.newArrayList(
-                    new TwitterUser("berniesanders"),
-                    new TwitterUser("HillaryClinton"),
-                    new TwitterUser("realDonaldTrump"),
-                    new TwitterUser("RealBenCarson"),
-                    new TwitterUser("marcorubio"),
-                    new TwitterUser("JebBush")
+                    new TwitterUser("berniesanders")
+//                    new TwitterUser("HillaryClinton"),
+//                    new TwitterUser("realDonaldTrump"),
+//                    new TwitterUser("RealBenCarson"),
+//                    new TwitterUser("marcorubio"),
+//                    new TwitterUser("JebBush")
             ));
             userGroup.analyzeTweets(occurrenceCounter, null);
             userGroup.printToStream(System.out, null);
@@ -41,7 +44,7 @@ public class Main {
              * serialization of fetched twitter user
              * The folder where you want to save the twitter users must exist!
              */
-            Serializer.serialize(userGroup,"\\twitter user\\republicans");
+//            Serializer.serialize(userGroup,"\\twitter user\\republicans");
 
             /*
              * deserialisation if twitter user
