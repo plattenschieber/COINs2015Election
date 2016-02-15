@@ -3,7 +3,7 @@ import csv
 from pprint import pprint
 
 # setup a unique user agent to not get banned
-r = praw.Reddit(user_agent='mac:COINs2015Election:v1.0.2 (by /u/plattenschieber)')
+r = praw.Reddit(user_agent='mac:COINs2015Election:v1.0.3 (by /u/plattenschieber)')
 
 # a list of subreddits based on buzzwords and some manual ones where we know they are relevant for us 
 subredditlist = ['SandersForPresident', 'Clinton', 'hillaryclinton', 'democrats', 'Libertarian', 'PoliticalDiscussion', 'worldpolitics', 'POLITIC', 'politics', 'SandersAlerts', 'uspolitics', 'Liberal', 'The_Donald', 'Conservative', 'Conservatives', 'Marco_Rubio', 'republicans', 'Republican', 'ElectionPolls', 'Forecast2016', 'BenCarson']
